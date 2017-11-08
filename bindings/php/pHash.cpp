@@ -34,16 +34,6 @@ struct ph_text_hash
 	int count;
 };
 
-/* {{{ phpinfo logo definitions */
-
-#include "php_logos.h"
-
-
-static unsigned char pHash_logo[] = {
-#include "pHash_logos.h"
-}; 
-/* }}} */
-
 /* {{{ Resource destructors */
 int le_ph_video_hash;
 extern "C" void ph_video_hash_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
@@ -145,7 +135,6 @@ ZEND_GET_MODULE(pHash)
 /* {{{ PHP_MINIT_FUNCTION */
 PHP_MINIT_FUNCTION(pHash)
 {
-	php_register_info_logo("PHASH_LOGO_ID", "", pHash_logo, 49651);
 	le_ph_video_hash = zend_register_list_destructors_ex(ph_video_hash_dtor, 
 						   NULL, "ph_video_hash", module_number);
 	le_ph_image_hash = zend_register_list_destructors_ex(ph_image_hash_dtor, 
@@ -165,8 +154,6 @@ PHP_MINIT_FUNCTION(pHash)
 /* {{{ PHP_MSHUTDOWN_FUNCTION */
 PHP_MSHUTDOWN_FUNCTION(pHash)
 {
-	php_unregister_info_logo("PHASH_LOGO_ID");
-
 	/* add your stuff here */
 
 	return SUCCESS;
